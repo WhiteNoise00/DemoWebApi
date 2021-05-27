@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Test.Models.Task>
+@using Test.Models 
+
+@{
+    ViewBag.Title = "Все задачи";
+}
+
+
+
+<table class="table">
+    <tr>
+        <td>
+            <a asp-action="CreateTask">Создать задачу</a> |
+            <a asp-action="CreateEmployee">Добавить исполнителя</a> |
+            <a asp-action="ViewEmployees">Просмотреть список исполнителей</a> 
+           
+            
+        </td>
+    </tr>
+    <tr><td>Наименование задачи:</td><td>Приоритет:</td><td>Действия:</td></tr>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@item.Task_Name</td>
+            <td>@item.Task_Priority</td>
+            <td>
+                <a asp-action="TaskDetails" asp-controller="Home" asp-route-id="@item.Id">Подробнее</a> |
+                <a asp-action="TaskEdit" asp-controller="Home" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="TaskDelete" asp-controller="Home" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+
+
+    }
+
+
+
+</table>

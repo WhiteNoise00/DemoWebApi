@@ -1,0 +1,37 @@
+﻿@model Test.Models.Task
+@{
+    ViewBag.Title = "Добавление новой задачи";
+}
+<form asp-action="CreateTask" asp-controller="home">
+    <div class="form-group">
+        <label asp-for="Task_Name" class="control-label">Наименование задачи:</label>
+        <input type="text" asp-for="Task_Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Priority" class="control-label">Приоритет задачи:</label>
+        <input type="number" asp-for="Task_Priority" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Customer_Department" class="control-label">Отдел-заказчик:</label>
+        <input type="text" asp-for="Task_Customer_Department" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Executing_Department" class="control-label">Отдел-исполнитель:</label>
+        <input type="text" asp-for="Task_Executing_Department" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Executor_Data" class="control-label">Информация об исполнителях:</label>
+        <input type="text" asp-for="Task_Executor_Data" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Beginning_Date " class="control-label">Дата начала:</label>
+        <input type="date" asp-for="Task_Beginning_Date" class="datefield"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Task_Ending_Date " class="control-label">Дата окончания:</label>
+        <input type="date" asp-for="Task_Ending_Date" class="datefield" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Сохранить" />
+    </div>
+</form>

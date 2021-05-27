@@ -1,0 +1,33 @@
+﻿
+@model Test.Models.Task
+@using Test.Models
+@{
+    ViewBag.Title = "Просмотр задачи";
+}
+<h2>Задача: @Model.Task_Name</h2>
+<table class="table">
+
+    <tr><td>Приоритет:</td><td>Наименование отдела-заказчика:</td><td>Наименование отдела-исполнителя:</td><td>Дата начала:</td><td>Дата окончания:</td><td>Данные об исполнителях:</td></tr>
+
+    <tr>
+        <td>@Model.Task_Priority</td>
+        <td>@Model.Task_Customer_Department </td>
+        <td>@Model.Task_Executing_Department</td>
+      
+        <td>@Model.Task_Beginning_Date</td>
+        <td>@Model.Task_Ending_Date</td>
+        <td>
+            <ul>
+           @foreach (var c in Model.Employees)
+            {
+
+                <li>@c.Employee_Last_Name</li>
+
+            }
+            </ul>
+        </td>
+
+    </tr>
+
+
+</table>
