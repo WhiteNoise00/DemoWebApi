@@ -83,15 +83,6 @@ namespace Test.Controllers
             return RedirectToAction("Index");
         }
 
-        /*
-        //старый рабочий код
-        public async Task<IActionResult> ViewEmployees()
-        {
-            return View(await db.Employees.ToListAsync());
-        }
-
-        */
-
         public async Task<IActionResult> TaskDetails(int? id)
         {
             if (id != null)
