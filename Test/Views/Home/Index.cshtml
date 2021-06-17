@@ -21,15 +21,16 @@
     @foreach (var item in Model)
     {
 
-        <tr>
-            <td>@item.Task_Name</td>
-            <td>@item.Task_Priority</td>
-            <td>
-                <a asp-action="TaskDetails" asp-controller="Home" asp-route-id="@item.Id">Подробнее</a> |
-                <a asp-action="TaskEdit" asp-controller="Home" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="TaskDelete" asp-controller="Home" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
+<tr>
+    <td>@item.Task_Name</td>
+    <td>@item.Task_Priority</td>
+    
+    <td>
+        <a asp-action="TaskDetails" asp-controller="Home" asp-route-id="@item.Id">Подробнее</a> |
+        <a asp-action="TaskEdit" asp-controller="Home" asp-route-id="@item.Id">Изменить</a> |
+        <a asp-action="TaskDelete" asp-controller="Home" asp-route-id="@item.Id">Удалить</a>
+    </td>
+</tr>
 
 
     }

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Test.Models;
@@ -18,27 +15,24 @@ namespace Test.Controllers
         {
             db = context;
         }
-    
-        public async Task<IActionResult> ViewEmployees( string name) 
+
+        public async Task<IActionResult> ViewEmployees(string name, int? id) 
         {
-
-            IQueryable<Employee> em = db.Employees.Include(p => p.Tasks); 
-
-      
-            if (!String.IsNullOrEmpty(name))
+           IQueryable<Employee> em = db.Employees.Include(p => p.Tasks);  
+          
+            if (id != null && id != 0)
             {
-               
+                em = em.Where(e => e.Tasks.Any(t => t.Id == id));
+            }
+
+            if (!String.IsNullOrEmpty(name)) 
+            {
                 em = em.Where(x => EF.Functions.Like(x.Employee_Last_Name, $"%{name}%"));
             }
-            else
-            { /*return NotFound(); // здесь вылетает ошибка из-жа пустого запроса*/}
-            List<Models.Task> ts = db.Tasks.ToList();
-                     
-            SelectList lm = new SelectList(db.Employees, "Employee_Last_Name", "Employee_Last_Name");
-            ViewBag.Lm = lm;
-          
-            return View(em); 
-           
+             
+            SelectList tasks = new SelectList(db.Tasks, "Id", "Task_Name");
+            ViewBag.TasksList = tasks;          
+            return View(em);           
         }
 
         public async Task<IActionResult> Index()
@@ -56,8 +50,7 @@ namespace Test.Controllers
         {
             db.Tasks.Add(ts);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-           
+            return RedirectToAction("Index");           
         }
 
         public ActionResult CreateEmployee()
@@ -74,12 +67,11 @@ namespace Test.Controllers
                 foreach (var c in db.Tasks.Where(co => selectedTasks.Contains(co.Id)))
                 {
                     em.Tasks.Add(c);
-
                 }
             }
-            db.Employees.Add(em);
 
-             db.SaveChanges();
+            db.Employees.Add(em);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -89,36 +81,27 @@ namespace Test.Controllers
             {
                 Models.Task ts =  await db.Tasks.Include(e => e.Employees).FirstOrDefaultAsync(e => e.Id == id);
                 if (ts != null)
-                    return View(ts);
+                return View(ts);
             }
-            return NotFound();
-            
+            return NotFound();            
         }
-
 
         public async Task<IActionResult> EmployeeDetails(int? id)
-        {
-           
+        {           
            Employee em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);
             if (em == null) { return NotFound(); } 
-            
-
             return View(em);
-
         }
 
-
         public async Task<IActionResult> TaskEdit(int? id)
-        {
-            
+        {           
             if (id != null)
             {
                 Models.Task ts = await db.Tasks.FirstOrDefaultAsync(p => p.Id == id);
                 if (ts != null)
-                    return View(ts);
+                return View(ts);
             }
             return NotFound();
-
         }
 
         [HttpPost]
@@ -137,7 +120,7 @@ namespace Test.Controllers
             {
                 Models.Task ts = await db.Tasks.FirstOrDefaultAsync(p => p.Id == id);
                 if (ts != null)
-                    return View(ts);
+                return View(ts);
             }
             return NotFound();
         }
@@ -157,27 +140,23 @@ namespace Test.Controllers
 
         public async Task<IActionResult> EmployeeEdit(int? id)
         {                      
-             Models.Employee em =  db.Employees.Find(id);
-                em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);
-                if (em == null) { return NotFound(); }
-               ViewBag.Tasks = db.Tasks.ToList();
-
-       return View(em);
-
+             Employee em =  db.Employees.Find(id);
+             em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);
+             if (em == null) { return NotFound(); }
+             ViewBag.Tasks = db.Tasks.ToList();
+             return View(em);
         }
    
-
         [HttpPost]
         public async Task<IActionResult> EmployeeEdit(Employee em, int[] selectedTasks)
         {
            
-           Employee employee = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == em.Id);
+            Employee employee = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == em.Id);
 
             employee.Employee_Last_Name = em.Employee_Last_Name;
             employee.Employee_Name = em.Employee_Name;
             employee.Employee_Email = em.Employee_Email;
             employee.Employee_Middle_Name = em.Employee_Middle_Name;
-
             employee.Tasks.Clear();
 
             if (selectedTasks!=null)
@@ -185,17 +164,12 @@ namespace Test.Controllers
                 foreach (var c in db.Tasks.Where( co=> selectedTasks.Contains(co.Id)))
                 {
                     employee.Tasks.Add(c);
-
                 }
             }
-
           
-            db.Employees.Update(employee);
-            
+            db.Employees.Update(employee);            
             await db.SaveChangesAsync();          
-            return RedirectToAction("ViewEmployees");
-
-       
+            return RedirectToAction("ViewEmployees");       
         }
 
         [HttpGet]
@@ -206,7 +180,7 @@ namespace Test.Controllers
             {
                 Employee em = await db.Employees.FirstOrDefaultAsync(p => p.Id == id);
                 if (em != null)
-                    return View(em);
+                return View(em);
             }
             return NotFound();
         }
@@ -229,13 +203,9 @@ namespace Test.Controllers
             if (id != null)
             {
                 Models.Task ts = new Models.Task();
-                var tasks = await db.Tasks
-               .Where(b => b.Id == id)
-               .ToListAsync();
-                ViewBag.Tasks = tasks;
-               
+                var tasks = await db.Tasks.Where(b => b.Id == id).ToListAsync();
+                ViewBag.Tasks = tasks;               
             }
-
             return NotFound();
         }
 
@@ -251,10 +221,7 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-
-
-    }
- 
+    } 
 }
 
 

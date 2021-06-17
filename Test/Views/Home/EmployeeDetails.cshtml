@@ -7,7 +7,7 @@
 <h2>Сотрудник: @Model.Employee_Last_Name</h2>
 <table class="table">
 
-    <tr><td>Фамилия:</td><td>Отчество</td><td>имя:</td></tr>
+    <tr><td>Фамилия:</td><td>Отчество</td><td>Имя:</td><td>Электронная почта:</td><td>Список задач:</td></tr>
 
     <tr>
         <td>@Model.Employee_Last_Name</td>
@@ -15,15 +15,16 @@
         <td>@Model.Employee_Name</td>
         <td>@Model.Employee_Email</td>
         
+        <td>
+            <ul>
+                @foreach (var c in Model.Tasks)
+                {
 
-        <ul>
-            @foreach (var c in Model.Tasks)
-            {
+                    <li>@c.Task_Name</li>
 
-                <li>@c.Task_Name</li>
-
-            }
-        </ul>
+                }
+            </ul>
+        </td>
     </tr>
 
 </table>

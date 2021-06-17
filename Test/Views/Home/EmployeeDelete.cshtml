@@ -1,7 +1,24 @@
-﻿
+﻿@model Test.Models.Employee
 @{
     ViewData["Title"] = "EmployeeDelete";
 }
 
-<h1>EmployeeDelete</h1>
 
+<div>
+    <dl class="dl-horizontal">
+        <dt>Наименование исполнителя:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Employee_Last_Name)
+        </dd>
+
+
+    </dl>
+</div>
+
+    <div>
+        <form asp-controller="Home" asp-action="EmployeeDelete" method="post">
+            <div class="form-group">
+                <input type="submit" value="Удалить" />
+            </div>
+        </form>
+    </div>

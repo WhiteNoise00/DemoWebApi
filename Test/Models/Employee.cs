@@ -20,10 +20,14 @@ namespace Test.Models
         public string Employee_Email { get; set; }
 
         //Отдел
-      /*  public string Employee_Department { get; set; }
-        // Занимаемая должность
-        public string Employee_Position { get; set; }
-        */
+        /*  public string Employee_Department { get; set; }
+          // Занимаемая должность
+          public string Employee_Position { get; set; }
+          */
+
+       /* public int PositionId { get; set; }
+        public Position Position { get; set; }*/
+
         public virtual ICollection<Task> Tasks { get; set; }
 
         public Employee() { Tasks = new List<Task>(); }
