@@ -10,6 +10,5 @@ namespace Test.Models
         public IEnumerable<Employee> Emploees { get; set; }
         public IEnumerable<Task> Tasks { get; set; }
 
-        //или же можно указать конкретные свойства из классов
     }
 }

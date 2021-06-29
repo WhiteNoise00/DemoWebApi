@@ -15,18 +15,8 @@ namespace Test.Models
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
-            // создаем базу данных при первом обращении
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
-            //optionsBuilder.LogTo(System.Console.WriteLine);// пока лог в консоль не нужен
-            
-        }
-
     }
 }
 

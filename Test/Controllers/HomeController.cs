@@ -222,7 +222,7 @@ namespace Test.Controllers
             return NotFound();
         }
 
-        public async Task<IActionResult> ViewEmployee(int? id)
+       /* public async Task<IActionResult> ViewEmployee(int? id)
         {
             if (id != null)
             {
@@ -231,7 +231,7 @@ namespace Test.Controllers
                 ViewBag.Tasks = tasks;               
             }
             return NotFound();
-        }
+        }*/
     } 
 }
 
