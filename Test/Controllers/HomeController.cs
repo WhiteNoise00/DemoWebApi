@@ -222,16 +222,6 @@ namespace Test.Controllers
             return NotFound();
         }
 
-       /* public async Task<IActionResult> ViewEmployee(int? id)
-        {
-            if (id != null)
-            {
-                Models.Task ts = new Models.Task();
-                var tasks = await db.Tasks.Where(b => b.Id == id).ToListAsync();
-                ViewBag.Tasks = tasks;               
-            }
-            return NotFound();
-        }*/
     } 
 }
 
