@@ -6,42 +6,38 @@
 <h2>@Model.Task_Name</h2>
 <form asp-action="TaskEdit" asp-controller="home" asp-route-id="@Model.Id">
     <div class="form-group">
-        <label asp-for="Task_Name" class="control-label">Название задачи:</label>
+        <label asp-for="Task_Name" class="control-label"></label>
         <input type="text" asp-for="Task_Name" class="form-control" />
+        <span asp-validation-for="Task_Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Task_Priority" class="control-label">Приоритет:</label>
+        <label asp-for="Task_Priority" class="control-label"></label>
         <input type="number" asp-for="Task_Priority" class="form-control" />
+        <span asp-validation-for="Task_Priority" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Task_Customer_Department" class="control-label">Отдел-заказчик:</label>
-        <input type="text" asp-for="Task_Customer_Department" class="form-control" />
+        <label asp-for="Task_Description" class="control-label"></label>
+        <input type="text" asp-for="Task_Description" class="form-control" />
+        <span asp-validation-for="Task_Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Task_Executing_Department" class="control-label">Отдел-исполнитель:</label>
-        <input type="text" asp-for="Task_Executing_Department" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Task_Executor_Data" class="control-label">Информация об исполнителях:</label>
-        <input type="text" asp-for="Task_Executor_Data" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Task_Beginning_Date" class="datefield">Начало задачи:</label>
+        <label asp-for="Task_Beginning_Date" class="datefield"></label>
         <input type="date" asp-for="Task_Beginning_Date" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Task_Ending_Date" class="datefield">Окончание задачи:</label>
+        <label asp-for="Task_Ending_Date" class="datefield"></label>
         <input type="date" asp-for="Task_Ending_Date" class="form-control" />
     </div>
-    <!-- <select asp-for="TaskId" , asp-items="ViewBag.Tasks"></select> -->
 
+      <div class="editor-label"><b>Назначение сотрудника:</b></div>
+        @foreach (var e in ViewBag.Employees)
+        {
+            <input type="checkbox" name="selectedEmployees" value="@e.Id"
+                   @(Model.Employees.Contains(e) ? "checked=\"checked\"" : "") /> @e.Employee_Last_Name <br />
+            }
+    
     <div class="form-group">
         <input type="submit" value="Сохранить" />
     </div>
-    <div class="form-group">
-        <input type="submit" value="Добавить сотрудника на исполнение" asp-action="AddEmployee" asp-controller="home" asp-route-id="@Model.Id" />
-    </div>
-
-
-
+    
 </form>

@@ -6,13 +6,13 @@
     <title>@ViewData["Title"] - Test</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark box-shadow mb-3" >
-            <div class="container" 
- 
-}>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  bg-dark box-shadow mb-3">
+            <div class="container"
+                 }>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Test</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
@@ -43,6 +43,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

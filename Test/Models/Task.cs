@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,24 +10,36 @@ namespace Test.Models
     {
         // ID задачи
         public int Id { get; set; }
+
+
         // Приоритет задачи
+        [Required (ErrorMessage = "Выставите приоритет задаче")]        
+        [Display(Name = "Приоритет задачи")]
         public int Task_Priority { get; set; }
+
         // Приоритет задачи
+        [Required (ErrorMessage = "Введите наименование задачи")]
+        [StringLength(40)]
+        [Display(Name = "Наименование задачи")]
         public string Task_Name { get; set; }
-        // Отдел-заказчик
-        public string Task_Customer_Department { get; set; }
-        // Отдел-исполнитель
-        public string Task_Executing_Department { get; set; }
-        // Данные об исполнителях задачи
-        public string Task_Executor_Data { get; set; }//это можно убрать
+
+        // Краткое описание задачи
+        [Required(ErrorMessage = "Введите описание задачи")]
+        [StringLength(200)]
+        [Display(Name = "Описание задачи")]
+        public string Task_Description { get; set; }
+
         // Дата начала задачи
+        [Display(Name = "Начало выполнения задачи:")]
         public DateTime Task_Beginning_Date { get; set; }
+
         // Дата окончания задачи
+        [Display(Name = "Конец выполнения задачи:")]
         public DateTime Task_Ending_Date { get; set; }
         //Список сотрудников для конкректной задачи
         public virtual ICollection<Employee> Employees { get; set; }
 
-        public Task() { Employees = new List<Employee>(); } // Зачем мы создаем конструктор для данного класса? Реализация коллекции?
+        public Task() { Employees = new List<Employee>(); } 
 
      
     }

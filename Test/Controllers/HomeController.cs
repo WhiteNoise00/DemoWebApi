@@ -16,28 +16,28 @@ namespace Test.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> ViewEmployees(string name, int? id) 
+        public async Task<IActionResult> Index()
+        {           
+            return View(await db.Tasks.ToListAsync());
+        }
+
+        public async Task<IActionResult> ViewEmployees(string name, int? id)
         {
-           IQueryable<Employee> em = db.Employees.Include(p => p.Tasks);  
-          
+            IQueryable<Employee> em = db.Employees.Include(p => p.Tasks);
+
             if (id != null && id != 0)
             {
                 em = em.Where(e => e.Tasks.Any(t => t.Id == id));
             }
 
-            if (!String.IsNullOrEmpty(name)) 
+            if (!String.IsNullOrEmpty(name))
             {
                 em = em.Where(x => EF.Functions.Like(x.Employee_Last_Name, $"%{name}%"));
             }
-             
-            SelectList tasks = new SelectList(db.Tasks, "Id", "Task_Name");
-            ViewBag.TasksList = tasks;          
-            return View(em);           
-        }
 
-        public async Task<IActionResult> Index()
-        {           
-            return View(await db.Tasks.ToListAsync());
+            SelectList tasks = new SelectList(db.Tasks, "Id", "Task_Name");
+            ViewBag.TasksList = tasks;
+            return View(em);
         }
 
         public IActionResult CreateTask()
@@ -48,9 +48,15 @@ namespace Test.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask(Models.Task ts)
         {
-            db.Tasks.Add(ts);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");           
+            if (ModelState.IsValid)
+            {
+
+                db.Tasks.Add(ts);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }
 
         public ActionResult CreateEmployee()
@@ -60,19 +66,15 @@ namespace Test.Controllers
         }
 
         [HttpPost]
-        public  ActionResult CreateEmployee(Employee em, int[] selectedTasks)
+        public  ActionResult CreateEmployee(Employee em)
         {
-            if (selectedTasks!=null)
+            if (ModelState.IsValid)
             {
-                foreach (var c in db.Tasks.Where(co => selectedTasks.Contains(co.Id)))
-                {
-                    em.Tasks.Add(c);
-                }
+                db.Employees.Add(em);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-
-            db.Employees.Add(em);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return View();            
         }
 
         public async Task<IActionResult> TaskDetails(int? id)
@@ -97,19 +99,39 @@ namespace Test.Controllers
         {           
             if (id != null)
             {
-                Models.Task ts = await db.Tasks.FirstOrDefaultAsync(p => p.Id == id);
+                
+                Models.Task ts = await db.Tasks.Include(t => t.Employees).FirstOrDefaultAsync(t => t.Id == id);
+                ViewBag.Employees = db.Employees.ToList();
                 if (ts != null)
-                return View(ts);
+                    return View(ts);
             }
             return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> TaskEdit(Models.Task ts) 
-        {          
-            db.Tasks.Update(ts);
+        public async Task<IActionResult> TaskEdit(Models.Task ts, int[] selectedEmployees) 
+        {
+            Models.Task task = await db.Tasks.Include(t => t.Employees).FirstOrDefaultAsync(t => t.Id == ts.Id);
+           
+            task.Task_Name = ts.Task_Name;
+            task.Task_Priority = ts.Task_Priority;
+            task.Task_Description = ts.Task_Description;
+            task.Task_Beginning_Date = ts.Task_Beginning_Date;
+            task.Task_Ending_Date = ts.Task_Ending_Date;
+            task.Employees.Clear();
+
+            if (selectedEmployees != null)
+            {
+                foreach (var c in db.Employees.Where(co => selectedEmployees.Contains(co.Id)))
+                {
+                    task.Employees.Add(c);
+                }
+            }
+
+            db.Tasks.Update(task);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");        
+
         }
 
         [HttpGet]
@@ -139,12 +161,14 @@ namespace Test.Controllers
         }
 
         public async Task<IActionResult> EmployeeEdit(int? id)
-        {                      
-             Employee em =  db.Employees.Find(id);
-             em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);
-             if (em == null) { return NotFound(); }
-             ViewBag.Tasks = db.Tasks.ToList();
-             return View(em);
+        {
+            if (id != null)
+            {
+                Employee em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);                
+                ViewBag.Tasks = db.Tasks.ToList();
+                return View(em);
+            }
+            return NotFound();
         }
    
         [HttpPost]
@@ -205,19 +229,6 @@ namespace Test.Controllers
                 Models.Task ts = new Models.Task();
                 var tasks = await db.Tasks.Where(b => b.Id == id).ToListAsync();
                 ViewBag.Tasks = tasks;               
-            }
-            return NotFound();
-        }
-
-        [HttpGet]
-        [ActionName("ViewAllTasksEmployee")]
-        public async Task<IActionResult> ViewAllTasksEmployee(int? id)
-        {
-            if (id != null)
-            {
-                Models.Task ts = await db.Tasks.FirstOrDefaultAsync(p => p.Id == id);
-                if (ts != null)
-                return View(ts);
             }
             return NotFound();
         }
