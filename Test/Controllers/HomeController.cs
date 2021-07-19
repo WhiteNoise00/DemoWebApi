@@ -21,8 +21,8 @@ namespace Test.Controllers
           
         public async Task<IActionResult> Index()
         {           
-            /*Демонстрационный проект, позволяющий создавать и редактировать... небольшое предприятие  */
-            return View(await db.Tasks.ToListAsync());
+            
+            return View();
         }            
 
     }
