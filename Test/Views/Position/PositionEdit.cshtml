@@ -1,0 +1,19 @@
+﻿
+@model Test.Models.Position
+@using Test.Models
+@{
+    ViewBag.Title = "Редактирование должности";
+}
+<form asp-action="PositionEdit" asp-controller="position" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label asp-for="Position_Name" class="control-label"></label>
+        <input type="text" asp-for="Position_Name" class="form-control" />
+        <span asp-validation-for="Position_Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+
+</form>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Test.Models.Department>
+@using Test.Models
+@{
+    ViewBag.Title = "Список отделов";
+
+}
+
+
+<table class="table">
+    <tr><td>Наименование отдела:</td><td>Должности:</td><td>Действия:</td></tr>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@item.Department_Name</td>
+            <td>
+                <ul>
+                    @foreach (var c in item.Positions)
+                    {
+
+                        <li>@c.Position_Name</li>
+
+                    }
+                </ul>
+            </td>
+
+
+            <td>
+
+                <a asp-action="DepartmentEdit" asp-controller="Department" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="DepartmentDelete" asp-controller="Department" asp-route-id="@item.Id">Удалить</a>|
+                <a asp-action="DepartmentDetails" asp-controller="Department" asp-route-id="@item.Id">Детали</a>
+
+            </td>
+
+        </tr>
+    }
+</table>

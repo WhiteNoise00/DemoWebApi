@@ -1,18 +1,19 @@
-﻿@model Test.Models.Employee
+﻿
+@model Test.Models.Employee
 @using Test.Models
 @{
-    ViewBag.Title = "Добавление нового сотрудника";
+    ViewBag.Title = "Редактирование исполнителя";
 }
-<form asp-action="CreateEmployee" asp-controller="home">
-    <div class="form-group">
-        <label asp-for="Employee_Last_Name" class="control-label"></label>
-        <input type="text" asp-for="Employee_Last_Name" class="form-control" />
-        <span asp-validation-for="Employee_Last_Name" class="text-danger"></span>
-    </div>
+<form asp-action="EmployeeEdit" asp-controller="employee" asp-route-id="@Model.Id">
     <div class="form-group">
         <label asp-for="Employee_Name" class="control-label"></label>
         <input type="text" asp-for="Employee_Name" class="form-control" />
         <span asp-validation-for="Employee_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee_Last_Name" class="control-label"></label>
+        <input type="text" asp-for="Employee_Last_Name" class="form-control" />
+        <span asp-validation-for="Employee_Last_Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Employee_Middle_Name" class="control-label"></label>
@@ -29,13 +30,19 @@
         <input type="tel" asp-for="Employee_Phone" class="form-control" />
         <span asp-validation-for="Employee_Phone" class="text-danger"></span>
     </div>
-
+    <div>
+        <select name="id" asp-items="@ViewBag.PositionsList" class="form-control"></select>        
+    </div>
+    <div class="editor-label"><b>Выбор задач:</b></div>
+    @foreach (var t in ViewBag.Tasks)
+    {
+        <input type="checkbox" name="selectedTasks" value="@t.Id"
+               @(Model.Tasks.Contains(t) ? "checked=\"checked\"" : "") /> @t.Task_Name <br />
+        }
 
     <div class="form-group">
         <input type="submit" value="Сохранить" />
     </div>
-
-
 
 
 </form>

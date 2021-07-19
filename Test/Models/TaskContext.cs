@@ -12,9 +12,12 @@ namespace Test.Models
 
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Position> Positions { get; set; }
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }

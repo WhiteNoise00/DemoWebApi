@@ -1,0 +1,29 @@
+﻿@model Test.Models.Position
+@using Test.Models
+@{
+    ViewBag.Title = Model.Position_Name;
+}
+
+
+<table class="table">
+
+    <tr><td>Фамилия:</td><td>Отчество</td><td>Имя:</td><td>Электронная почта:</td><td>Личный Телефон:</td><td>Список задач:</td></tr>
+
+    <tr>
+        <td>@Model.Position_Name</td>
+        <td>@Model.Department.Department_Name</td>
+
+        <td>
+            <ul>
+                @foreach (var c in Model.Employees)
+                {
+
+                    <li>@c.Employee_Last_Name</li>
+
+                }
+            </ul>
+        </td>
+    </tr>
+
+</table>
+

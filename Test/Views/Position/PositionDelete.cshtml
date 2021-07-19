@@ -1,0 +1,24 @@
+﻿@model Test.Models.Position
+@{
+    ViewData["Title"] = "PositionDelete";
+}
+
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Наименование должности:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Position_Name)
+        </dd>
+
+
+    </dl>
+</div>
+
+    <div>
+        <form asp-controller="Position" asp-action="PositionDelete" method="post">
+            <div class="form-group">
+                <input type="submit" value="Удалить" />
+            </div>
+        </form>
+    </div>

@@ -1,0 +1,41 @@
+﻿@model Test.Models.Employee
+@using Test.Models
+@{
+    ViewBag.Title = "Добавление нового сотрудника";
+}
+<form asp-action="CreateEmployee" asp-controller="employee">
+    <div class="form-group">
+        <label asp-for="Employee_Last_Name" class="control-label"></label>
+        <input type="text" asp-for="Employee_Last_Name" class="form-control" />
+        <span asp-validation-for="Employee_Last_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee_Name" class="control-label"></label>
+        <input type="text" asp-for="Employee_Name" class="form-control" />
+        <span asp-validation-for="Employee_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee_Middle_Name" class="control-label"></label>
+        <input type="text" asp-for="Employee_Middle_Name" class="form-control" />
+        <span asp-validation-for="Employee_Middle_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee_Email" class="control-label"></label>
+        <input type="email" asp-for="Employee_Email" class="form-control" />
+        <span asp-validation-for="Employee_Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee_Phone" class="control-label"></label>
+        <input type="tel" asp-for="Employee_Phone" class="form-control" />
+        <span asp-validation-for="Employee_Phone" class="text-danger"></span>
+    </div>
+    <div><select name="posid" asp-items="@ViewBag.PositionsList" class="form-control"></select></div>
+
+    <div class="form-group">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+
+
+
+</form>

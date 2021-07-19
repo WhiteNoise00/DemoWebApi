@@ -1,0 +1,24 @@
+﻿
+@model Test.Models.Department
+@using Test.Models
+@{
+    ViewBag.Title = "Редактирование отдела";
+}
+<form asp-action="DepartmentEdit" asp-controller="Department" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label asp-for="Department_Name" class="control-label"></label>
+        <input type="text" asp-for="Department_Name" class="form-control" />
+        <span asp-validation-for="Department_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Department_Location" class="control-label"></label>
+        <input type="text" asp-for="Department_Location" class="form-control" />
+        <span asp-validation-for="Department_Location" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Сохранить" />
+    </div>
+
+
+</form>

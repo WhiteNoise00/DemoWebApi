@@ -1,0 +1,53 @@
+﻿
+@using Test.Models
+@model IndexViewModel
+
+
+@{
+    ViewBag.Title = "Все исполнители";
+
+}
+
+
+<table class="table">
+    <tr><td>Задача:</td><td>Приоритет:</td><td>Начало:</td><td>Окончание:</td><td>Действия:</td></tr>
+    @foreach (var item in Model.Tasks)
+    {
+
+        <tr>
+            <td>@item.Task_Name</td>
+            <td>@item.Task_Priority</td>
+            <td>@item.Task_Beginning_Date</td>
+            <td>@item.Task_Ending_Date</td>
+
+            <td>
+
+                <a asp-action="TaskEdit" asp-controller="Task" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="TaskDelete" asp-controller="Task" asp-route-id="@item.Id">Удалить</a>|
+                <a asp-action="TaskDetails" asp-controller="Task" asp-route-id="@item.Id">Детали</a>
+
+            </td>
+
+        </tr>
+    }
+
+</table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="ViewTasks"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="ViewTasks"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}
+

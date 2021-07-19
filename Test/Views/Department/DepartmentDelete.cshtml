@@ -1,0 +1,24 @@
+﻿@model Test.Models.Department
+@{
+    ViewData["Title"] = "DepartmentDelete";
+}
+
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Наименование отдела:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Department_Name)
+        </dd>
+
+
+    </dl>
+</div>
+
+    <div>
+        <form asp-controller="Department" asp-action="DepartmentDelete" method="post">
+            <div class="form-group">
+                <input type="submit" value="Удалить" />
+            </div>
+        </form>
+    </div>

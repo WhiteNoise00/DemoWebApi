@@ -4,17 +4,17 @@
     ViewBag.Title = Model.Employee_Last_Name;
 }
 
-<h2>Сотрудник: @Model.Employee_Last_Name</h2>
 <table class="table">
 
-    <tr><td>Фамилия:</td><td>Отчество</td><td>Имя:</td><td>Электронная почта:</td><td>Список задач:</td></tr>
+    <tr><td>Фамилия:</td><td>Отчество</td><td>Имя:</td><td>Электронная почта:</td><td>Личный Телефон:</td><td>Список задач:</td></tr>
 
     <tr>
         <td>@Model.Employee_Last_Name</td>
         <td>@Model.Employee_Middle_Name </td>
         <td>@Model.Employee_Name</td>
         <td>@Model.Employee_Email</td>
-        
+        <td>@Model.Employee_Phone</td>
+
         <td>
             <ul>
                 @foreach (var c in Model.Tasks)

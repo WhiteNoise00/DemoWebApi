@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Test.Models.Position>
+@using Test.Models
+@{
+    ViewBag.Title = "Список должностей";
+
+}
+
+
+<table class="table">
+    <tr><td>Наименование должности:</td><td>Отдел:</td><td>Действия:</td></tr>
+    @foreach (var item in Model)
+    {
+
+<tr>
+    <td>@item.Position_Name</td>
+    <td>@item.Department.Department_Name</td>
+
+    <td>
+
+        <a asp-action="PositionEdit" asp-controller="Position" asp-route-id="@item.Id">Изменить</a> |
+        <a asp-action="PositionDelete" asp-controller="Position" asp-route-id="@item.Id">Удалить</a>|
+        <a asp-action="PositionDetails" asp-controller="Position" asp-route-id="@item.Id">Детали</a>
+
+    </td>
+
+</tr>
+    }
+</table>
