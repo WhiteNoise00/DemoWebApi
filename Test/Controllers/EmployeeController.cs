@@ -18,13 +18,13 @@ namespace Test.Controllers
         {
             db = context;
         }
-
-        //Доделать здесь постраничный вывод
+        
         [Route("Employee/ViewEmployees")]
-        public async Task<IActionResult> ViewEmployees(string name, int? id)
-        {           
-            int pageSize = 3;
+        public async Task<IActionResult> ViewEmployees(string name, int? id, int page=1)
+        {                      
             IQueryable<Employee> em = db.Employees.Include(t => t.Tasks).Include(t => t.Position);
+
+            int pageSize = 3;
 
             if (id != null && id != 0)
             {
@@ -40,7 +40,18 @@ namespace Test.Controllers
             tasksValue.Insert(0, new Models.Task { Task_Name = "Все", Id = 0 });
             SelectList tasks = new SelectList(tasksValue, "Id", "Task_Name");
             ViewBag.TasksList = tasks;            
-            return View(em);
+
+            //Постраничный вывод
+            var count = await em.CountAsync();
+            var items = await em.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Employees = items
+            };
+            return View(viewModel);
 
         }
 

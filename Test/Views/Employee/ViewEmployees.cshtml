@@ -1,10 +1,12 @@
-﻿@model IEnumerable<Test.Models.Employee>
+﻿@*@model IEnumerable<Test.Models.Employee>*@
 @using Test.Models
+@model IndexViewModel
+
 @{
     ViewBag.Title = "Все исполнители";
 
 }
-<form method="get" >
+<form method="get">
     <div class="form-inline form-group">
         <label class="control-label">Фамилия: </label>
         <input name="name" class="form-control" />
@@ -16,7 +18,7 @@
 
 <table class="table">
     <tr><td>Фамилия исполнителя:</td><td>Имя исполнителя:</td><td>Отчество:</td><td>Должность:</td><td>Действия:</td></tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Employees)
     {
 
         <tr>
@@ -37,3 +39,21 @@
         </tr>
     }
 </table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="ViewEmployees"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="ViewEmployees"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}

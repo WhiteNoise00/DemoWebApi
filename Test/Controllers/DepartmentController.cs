@@ -20,25 +20,32 @@ namespace Test.Controllers
             db = context;
         }
 
-        /*    public async Task<IActionResult> Index()
-            {
-                return View();
-            }*/
        [Route("Department/ViewDepartments")]
-        public async Task<IActionResult> ViewDepartments()
+        public async Task<IActionResult> ViewDepartments(int page = 1)
         {
-            IQueryable<Department> dep1 = db.Departments.Include(t => t.Positions);
+            IQueryable<Department> dep = db.Departments.Include(t => t.Positions);
 
-            return View(dep1);
-            //return ControllerContext.MyDisplayRouteInfo();
+            int pageSize = 3;
+           
+            var count = await dep.CountAsync();
+            var items = await dep.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Departments = items
+            };
+            return View(viewModel);
         }
 
-        //создание отдела
+        
         [Route("Department/CreateDepartment")]
         public ActionResult CreateDepartment()
         {
             return View();
         }
+
         [Route("Department/CreateDepartment")]
         [HttpPost]
         public ActionResult CreateDepartment(Department dep)

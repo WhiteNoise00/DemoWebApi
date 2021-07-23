@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Test.Models.Position>
-@using Test.Models
+﻿@using Test.Models
+@model IndexViewModel
+
 @{
     ViewBag.Title = "Список должностей";
 
@@ -8,21 +9,39 @@
 
 <table class="table">
     <tr><td>Наименование должности:</td><td>Отдел:</td><td>Действия:</td></tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Positions)
     {
 
-<tr>
-    <td>@item.Position_Name</td>
-    <td>@item.Department.Department_Name</td>
+        <tr>
+            <td>@item.Position_Name</td>
+            <td>@item.Department.Department_Name</td>
 
-    <td>
+            <td>
 
-        <a asp-action="PositionEdit" asp-controller="Position" asp-route-id="@item.Id">Изменить</a> |
-        <a asp-action="PositionDelete" asp-controller="Position" asp-route-id="@item.Id">Удалить</a>|
-        <a asp-action="PositionDetails" asp-controller="Position" asp-route-id="@item.Id">Детали</a>
+                <a asp-action="PositionEdit" asp-controller="Position" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="PositionDelete" asp-controller="Position" asp-route-id="@item.Id">Удалить</a>|
+                <a asp-action="PositionDetails" asp-controller="Position" asp-route-id="@item.Id">Детали</a>
 
-    </td>
+            </td>
 
-</tr>
+        </tr>
     }
 </table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="ViewPositions"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="ViewPositions"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}

@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Test.Models.Department>
-@using Test.Models
+﻿@using Test.Models
+@model IndexViewModel
+
 @{
     ViewBag.Title = "Список отделов";
 
@@ -8,7 +9,7 @@
 
 <table class="table">
     <tr><td>Наименование отдела:</td><td>Должности:</td><td>Действия:</td></tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Departments)
     {
 
         <tr>
@@ -36,3 +37,21 @@
         </tr>
     }
 </table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="ViewDepartments"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="ViewDepartments"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}

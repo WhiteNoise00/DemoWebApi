@@ -20,11 +20,22 @@ namespace Test.Controllers
 
 
         [Route("Position/ViewPositions")]
-        public async Task<IActionResult> ViewPositions()
+        public async Task<IActionResult> ViewPositions(int page = 1)
         {          
             IQueryable<Position> pos = db.Positions.Include(t => t.Department);
 
-            return View(pos);
+            int pageSize = 3;
+
+            var count = await pos.CountAsync();
+            var items = await pos.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Positions = items
+            };
+            return View(viewModel);
         }
 
         [Route("Position/CreatePosition")]
