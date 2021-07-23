@@ -30,13 +30,15 @@ namespace Test.Models
         public string Task_Description { get; set; }
 
         // Дата начала задачи
-        [Display(Name = "Начало выполнения задачи:")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required(ErrorMessage = "Введите дату постановки задачи: dd.mm.yyyy")]
+        [Display(Name = "Дата постановки задачи:")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Task_Beginning_Date { get; set; }
 
         // Дата окончания задачи
-        [Display(Name = "Конец выполнения задачи:")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required(ErrorMessage = "Введите дату окончания задачи: dd.mm.yyyy")]
+        [Display(Name = "Дата окончания задачи:")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Task_Ending_Date { get; set; }
         //Список сотрудников для конкректной задачи
         public virtual ICollection<Employee> Employees { get; set; }

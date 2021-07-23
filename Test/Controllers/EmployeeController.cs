@@ -97,6 +97,7 @@ namespace Test.Controllers
         }
 
         [Route("Employee/EmployeeEdit")]
+        [HttpGet]
         public async Task<IActionResult> EmployeeEdit(int? id)
         {
             if (id != null)
@@ -110,6 +111,7 @@ namespace Test.Controllers
             }
             return NotFound();
         }
+
 
         [Route("Employee/EmployeeEdit")]
         [HttpPost]

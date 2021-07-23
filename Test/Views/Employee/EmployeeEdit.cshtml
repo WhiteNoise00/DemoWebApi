@@ -31,14 +31,15 @@
         <span asp-validation-for="Employee_Phone" class="text-danger"></span>
     </div>
     <div>
-        <select name="id" asp-items="@ViewBag.PositionsList" class="form-control"></select>        
-    </div>
-    <div class="editor-label"><b>Выбор задач:</b></div>
-    @foreach (var t in ViewBag.Tasks)
-    {
-        <input type="checkbox" name="selectedTasks" value="@t.Id"
-               @(Model.Tasks.Contains(t) ? "checked=\"checked\"" : "") /> @t.Task_Name <br />
-        }
+            <select name="id" asp-items="@ViewBag.PositionsList" class="form-control"></select>
+        </div>
+        <div class="editor-label"><b>Выбор задач:</b></div>
+        @foreach (var t in ViewBag.Tasks)
+        {
+            <input type="checkbox" name="selectedTasks" value="@t.Id"
+                   @(Model.Tasks.Contains(t) ? "checked=\"checked\"" : "") /> @t.Task_Name <br />
+            }
+    
 
     <div class="form-group">
         <input type="submit" value="Сохранить" />
