@@ -22,7 +22,7 @@ namespace Test.Controllers
         [Route("Employee/ViewEmployees")]
         public async Task<IActionResult> ViewEmployees(string name, int? id, int page=1)
         {                      
-            IQueryable<Employee> em = db.Employees.Include(t => t.Tasks).Include(t => t.Position);
+            IQueryable<Employee> em = db.Employees.Include(t => t.Tasks).Include(t => t.Position.Department);
 
             int pageSize = 3;
 
