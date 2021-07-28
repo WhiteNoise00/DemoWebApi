@@ -63,8 +63,8 @@ namespace Test.Controllers
             if (positionsValue != null)
             {
                 List<Position> pos = await db.Positions.ToListAsync();
-                SelectList tasks = new SelectList(pos, "Id", "Position_Name");                
-                ViewBag.PositionsList = tasks;
+                SelectList positions = new SelectList(pos, "Id", "Position_Name");                
+                ViewBag.PositionsList = positions;
                 return View();
             }
             else
@@ -80,10 +80,8 @@ namespace Test.Controllers
         {
             Position pos = await db.Positions.FirstOrDefaultAsync(p => p.Id == posid);
             
-
             if (ModelState.IsValid)
             {
-                //Position pos = await db.Positions.FirstOrDefaultAsync(p => p.Id == posid);
                 em.Position = pos;
                 db.Employees.Add(em);
                 db.SaveChanges();
@@ -116,8 +114,8 @@ namespace Test.Controllers
             {
                 Employee em = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == id);
                 List<Position> pos = await db.Positions.ToListAsync();
-                SelectList tasks = new SelectList(pos, "Id", "Position_Name");
-                ViewBag.PositionsList = tasks;
+                SelectList positions = new SelectList(pos, "Id", "Position_Name");
+                ViewBag.PositionsList = positions;
                 ViewBag.Tasks = db.Tasks.ToList();
                 return View(em);
             }
@@ -127,7 +125,7 @@ namespace Test.Controllers
 
         [Route("Employee/EmployeeEdit")]
         [HttpPost]
-        public async Task<IActionResult> EmployeeEdit(Employee em, int[] selectedTasks)
+        public async Task<IActionResult> EmployeeEdit(Employee em, int[] selectedTasks, int posid)
         {
 
             Employee employee = await db.Employees.Include(e => e.Tasks).FirstOrDefaultAsync(e => e.Id == em.Id);
@@ -137,7 +135,7 @@ namespace Test.Controllers
             employee.Employee_Email = em.Employee_Email;
             employee.Employee_Middle_Name = em.Employee_Middle_Name;
             employee.Employee_Phone = em.Employee_Phone;
-            
+            employee.PositionId = posid;
             employee.Tasks.Clear();
 
             if (selectedTasks != null)

@@ -21,22 +21,23 @@
     @foreach (var item in Model.Employees)
     {
 
-        <tr>
-            <td>@item.Employee_Last_Name</td>
-            <td>@item.Employee_Name</td>
-            <td>@item.Employee_Middle_Name</td>
-            <td>@item.Position.Position_Name</td>
+<tr>
+    <td>@item.Employee_Last_Name</td>
+    <td>@item.Employee_Name</td>
+    <td>@item.Employee_Middle_Name</td>
+    <td>@item.Position.Position_Name</td>
+    <td>@item.Position.DepartmentId</td>
 
 
-            <td>
+    <td>
 
-                <a asp-action="EmployeeEdit" asp-controller="Employee" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="EmployeeDelete" asp-controller="Employee" asp-route-id="@item.Id">Удалить</a>|
-                <a asp-action="EmployeeDetails" asp-controller="Employee" asp-route-id="@item.Id">Детали</a>
+        <a asp-action="EmployeeEdit" asp-controller="Employee" asp-route-id="@item.Id">Изменить</a> |
+        <a asp-action="EmployeeDelete" asp-controller="Employee" asp-route-id="@item.Id">Удалить</a>|
+        <a asp-action="EmployeeDetails" asp-controller="Employee" asp-route-id="@item.Id">Детали</a>
 
-            </td>
+    </td>
 
-        </tr>
+</tr>
     }
 </table>
 @if (Model.PageViewModel.HasPreviousPage)
