@@ -69,8 +69,8 @@ namespace Test.Controllers
             return NotFound();
         }
 
-
-
+        [HttpGet]
+        [Route("Task/TaskEdit")]
         public async Task<IActionResult> TaskEdit(int? id)
         {
             if (id != null)
@@ -85,6 +85,7 @@ namespace Test.Controllers
             return NotFound();
         }
 
+        [Route("Task/TaskEdit")]       
         [HttpPost]
         public async Task<IActionResult> TaskEdit(Models.Task ts, int[] selectedEmployees)
         {
@@ -109,7 +110,7 @@ namespace Test.Controllers
             {
                 db.Tasks.Update(task);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewTasks");
             }
             else
             {

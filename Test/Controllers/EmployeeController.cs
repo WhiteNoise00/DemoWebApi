@@ -107,8 +107,9 @@ namespace Test.Controllers
             return NotFound();
         }
 
-        [Route("Employee/EmployeeEdit")]
+        
         [HttpGet]
+        [Route("Employee/EmployeeEdit")]
         public async Task<IActionResult> EmployeeEdit(int? id)
         {
             if (id != null)
@@ -136,6 +137,7 @@ namespace Test.Controllers
             employee.Employee_Email = em.Employee_Email;
             employee.Employee_Middle_Name = em.Employee_Middle_Name;
             employee.Employee_Phone = em.Employee_Phone;
+            
             employee.Tasks.Clear();
 
             if (selectedTasks != null)
@@ -160,10 +162,9 @@ namespace Test.Controllers
             }
         }
 
-        //может, в путь стоит добавить id?
+     
         [Route("Employee/EmployeeDelete/{id?}")]
         [HttpGet]
-        [ActionName("EmployeeDelete")]
         public async Task<IActionResult> EmployeeConfirmDelete(int? id)
         {
             if (id != null)
