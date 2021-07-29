@@ -70,7 +70,9 @@ namespace Test.Controllers
         {
             if (id != null)
             {
-                Position pos = await db.Positions.Include(e => e.Department).FirstOrDefaultAsync(e => e.Id == id);
+                
+                 Position  pos = await db.Positions.Include(d=>d.Employees).Include(d=>d.Department).FirstOrDefaultAsync(e => e.Id == id);
+              
                 if (pos!= null)
                 {
                     return View(pos);
