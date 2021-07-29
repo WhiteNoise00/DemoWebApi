@@ -45,7 +45,7 @@ namespace Test.Models
         [Required(ErrorMessage = "Введите телефонный номер")]
         [Display(Name = "Телефонный номер для обратной связи:")]
         [StringLength(12)]
-        public string Employee_Phone { get; set; } //а точно ли string?
+        public string Employee_Phone { get; set; } 
 
         [Required(ErrorMessage = "Укажите должность")]
         [Display(Name = "Занимаемая должность:")]

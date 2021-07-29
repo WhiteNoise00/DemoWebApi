@@ -9,7 +9,6 @@ namespace Test.Models
 {
     public class TaskContext : DbContext
     {
-
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -17,7 +16,6 @@ namespace Test.Models
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }

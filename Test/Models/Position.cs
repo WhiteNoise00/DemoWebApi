@@ -16,7 +16,6 @@ namespace Test.Models
         [Display(Name = "Наименование должности")]
         public string Position_Name { get; set; }
 
-        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]// попробуем так
         public int DepartmentId { get; set; }
         public Department Department{ get; set; }
 
