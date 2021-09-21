@@ -163,6 +163,7 @@ namespace Test.Controllers
      
         [Route("Employee/EmployeeDelete/{id?}")]
         [HttpGet]
+        [ActionName("EmployeeDelete")]
         public async Task<IActionResult> EmployeeConfirmDelete(int? id)
         {
             if (id != null)

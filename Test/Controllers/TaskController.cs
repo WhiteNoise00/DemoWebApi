@@ -141,7 +141,7 @@ namespace Test.Controllers
                 Models.Task ts = new Models.Task { Id = id.Value };
                 db.Entry(ts).State = EntityState.Deleted;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewTasks");
             }
             return NotFound();
         }
